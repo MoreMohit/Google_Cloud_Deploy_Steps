@@ -1,61 +1,62 @@
-🚀 Customer Churn Prediction App Deployment on Google Cloud This guide
-provides step-by-step instructions to build, deploy, and manage your
-Customer Churn Prediction application using Google Cloud Run and Google
-Container Registry (GCR).
+# 🚀 Customer Churn Prediction App Deployment on Google Cloud
 
-📚 Prerequisites Before proceeding, ensure the following are set up:
+This guide provides step-by-step instructions to build, deploy, and manage your Customer Churn Prediction application using **Google Cloud Run** and **Google Container Registry (GCR)**.
 
-Google Cloud account with billing enabled.
+---
 
-Google Cloud SDK installed and configured.
+## 📚 Prerequisites
 
-Docker installed on your machine.
+Before proceeding, ensure the following are set up:
 
-Project configured with gcloud CLI:
+- Google Cloud account with billing enabled.
+- Google Cloud SDK installed and configured.
+- Docker installed on your machine.
+- Project configured with `gcloud` CLI:
+```bash
+gcloud config set project [PROJECT_ID]
 
-bash Copy Edit gcloud config set project \[PROJECT_ID\] 🔥 Step 1: Build
-and Submit Docker Image To build and submit the Docker image to Google
-Container Registry (GCR), run the following command:
+## 🔥 Step 1: Build and Submit Docker Image
 
-bash Copy Edit gcloud builds submit \--no-cache \--tag
-gcr.io/\[PROJECT_ID\]/\[APP_NAME\] 🗑️ Step 2: Delete Existing Container
-Image (Optional) If you need to delete the existing Docker image from
-GCR before redeploying:
+To build and submit the Docker image to **Google Container Registry (GCR)**, run the following command:
 
-bash Copy Edit gcloud container images delete
-gcr.io/\[PROJECT_ID\]/\[APP_NAME\] 📦 Step 3: Build and Tag Docker Image
-Again (Optional) If you want to rebuild and tag the Docker image:
+```bash
+gcloud builds submit --no-cache --tag gcr.io/[PROJECT_ID]/[APP_NAME]
 
-bash Copy Edit gcloud builds submit \--tag
-gcr.io/\[PROJECT_ID\]/\[APP_NAME\] 🚀 Step 4: Deploy Application to
-Google Cloud Run To deploy the application using Google Cloud Run:
+## 🗑️ Step 2: Delete Existing Container Image (Optional)
 
-bash Copy Edit gcloud run deploy \[APP_NAME\] \\ \--image
-gcr.io/\[PROJECT_ID\]/\[APP_NAME\] \\ \--platform managed \\ \--region
-\[REGION\] \\ \--allow-unauthenticated Deployment Parameters:
-\[APP_NAME\] -- Name of your application.
+If you need to delete the existing Docker image from **Google Container Registry (GCR)** before redeploying, run the following command:
 
-\[PROJECT_ID\] -- Your Google Cloud project ID.
+```bash
+gcloud container images delete gcr.io/[PROJECT_ID]/[APP_NAME]
 
-\[REGION\] -- Desired region (e.g., asia-south1).
+## 📦 Step 3: Build and Tag Docker Image Again (Optional)
 
-✅ Step 5: Verify Deployment After successful deployment, a URL will be
-generated. You can access your application using this URL.
+If you want to rebuild and tag the Docker image, run the following command:
+
+```bash
+gcloud builds submit --tag gcr.io/[PROJECT_ID]/[APP_NAME]
+
+## 🚀 Step 4: Deploy Application to Google Cloud Run
+
+To deploy the application using **Google Cloud Run**, run the following command:
+
+```bash
+gcloud run deploy [APP_NAME] \
+    --image gcr.io/[PROJECT_ID]/[APP_NAME] \
+    --platform managed \
+    --region [REGION] \
+    --allow-unauthenticated
+
+## ✅ Step 5: Verify Deployment
+
+After successful deployment, a URL will be generated. You can access your application using this URL.
 
 To list all running services:
 
-bash Copy Edit gcloud run services list To get the URL of your deployed
-service:
+```bash
+gcloud run services list
 
-bash Copy Edit gcloud run services describe \[APP_NAME\] \--format
-\'value(status.url)\' 🛑 Optional: Stop or Delete Service To stop or
-delete a service:
+To get the URL of your deployed service:
 
-bash Copy Edit gcloud run services delete \[APP_NAME\] 🎯 Notes Make
-sure to replace placeholders like \[PROJECT_ID\], \[APP_NAME\], and
-\[REGION\] with actual values.
-
-The \--allow-unauthenticated flag allows public access. Remove it for
-restricted access.
-
-Happy Deploying! 🎉
+```bash
+gcloud run services describe [APP_NAME] --format 'value(status.url)'
